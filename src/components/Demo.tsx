@@ -1,34 +1,11 @@
 "use client";
 
-import { useEffect, useCallback, useState, useMemo } from "react";
-import { Input } from "../components/ui/input"
-import { signIn, signOut, getCsrfToken } from "next-auth/react";
+import { useEffect, useCallback, useState } from "react";
 import sdk, {
-    AddFrame,
+  AddFrame,
   FrameNotificationDetails,
-  SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
-import {
-  useAccount,
-  useSendTransaction,
-  useSignMessage,
-  useSignTypedData,
-  useWaitForTransactionReceipt,
-  useDisconnect,
-  useConnect,
-  useSwitchChain,
-  useChainId,
-} from "wagmi";
-
-import { config } from "~/components/providers/WagmiProvider";
-import { Button } from "~/components/ui/Button";
-import { truncateAddress } from "~/lib/truncateAddress";
-import { base, optimism } from "wagmi/chains";
-import { BaseError, UserRejectedRequestError } from "viem";
-import { useSession } from "next-auth/react"
-import { createStore } from 'mipd'
-import { Label } from "~/components/ui/label";
 import Image from 'next/image'
 import { Press_Start_2P } from 'next/font/google'
 
@@ -38,116 +15,25 @@ const pixelFont = Press_Start_2P({
   subsets: ['latin'],
 })
 
-export default function Demo(
-  { title }: { title?: string } = { title: "Frames v2 Demo" }
-) {
+export default function Demo() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
-  const [isContextOpen, setIsContextOpen] = useState(false);
-  const [txHash, setTxHash] = useState<string | null>(null);
-
-  const [added, setAdded] = useState(false);
   const [notificationDetails, setNotificationDetails] =
     useState<FrameNotificationDetails | null>(null);
-
-  const [lastEvent, setLastEvent] = useState("");
-
-  const [addFrameResult, setAddFrameResult] = useState("");
-  const [sendNotificationResult, setSendNotificationResult] = useState("");
 
   useEffect(() => {
     setNotificationDetails(context?.client.notificationDetails ?? null);
   }, [context]);
 
-  const { address, isConnected } = useAccount();
-  const chainId = useChainId();
-
-  const {
-    sendTransaction,
-    error: sendTxError,
-    isError: isSendTxError,
-    isPending: isSendTxPending,
-  } = useSendTransaction();
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash: txHash as `0x${string}`,
-    });
-
-  const {
-    signTypedData,
-    error: signTypedError,
-    isError: isSignTypedError,
-    isPending: isSignTypedPending,
-  } = useSignTypedData();
-
-  const { disconnect } = useDisconnect();
-  const { connect } = useConnect();
-
-  const {
-    switchChain,
-    error: switchChainError,
-    isError: isSwitchChainError,
-    isPending: isSwitchChainPending,
-  } = useSwitchChain();
-
-  const handleSwitchChain = useCallback(() => {
-    switchChain({ chainId: chainId === base.id ? optimism.id : base.id });
-  }, [switchChain, chainId]);
-
   useEffect(() => {
     const load = async () => {
       const context = await sdk.context;
       setContext(context);
-      setAdded(context.client.added);
-
-      sdk.on("frameAdded", ({ notificationDetails }) => {
-        setLastEvent(
-          `frameAdded${!!notificationDetails ? ", notifications enabled" : ""}`
-        );
-
-        setAdded(true);
-        if (notificationDetails) {
-          setNotificationDetails(notificationDetails);
-        }
-      });
-
-      sdk.on("frameAddRejected", ({ reason }) => {
-        setLastEvent(`frameAddRejected, reason ${reason}`);
-      });
-
-      sdk.on("frameRemoved", () => {
-        setLastEvent("frameRemoved");
-        setAdded(false);
-        setNotificationDetails(null);
-      });
-
-      sdk.on("notificationsEnabled", ({ notificationDetails }) => {
-        setLastEvent("notificationsEnabled");
-        setNotificationDetails(notificationDetails);
-      });
-      sdk.on("notificationsDisabled", () => {
-        setLastEvent("notificationsDisabled");
-        setNotificationDetails(null);
-      });
-
-      sdk.on("primaryButtonClicked", () => {
-        console.log("primaryButtonClicked");
-      });
 
       console.log("Calling ready");
       sdk.actions.ready({});
-
-// Set up a MIPD Store, and request Providers.
-const store = createStore()
-
-// Subscribe to the MIPD Store.
-store.subscribe(providerDetails => {
-  console.log("PROVIDER DETAILS", providerDetails)
-  // => [EIP6963ProviderDetail, EIP6963ProviderDetail, ...]
-})
-
     };
+
     if (sdk && !isSDKLoaded) {
       console.log("Calling load");
       setIsSDKLoaded(true);
@@ -157,113 +43,6 @@ store.subscribe(providerDetails => {
       };
     }
   }, [isSDKLoaded]);
-
-  const openUrl = useCallback(() => {
-    sdk.actions.openUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-  }, []);
-
-  const openWarpcastUrl = useCallback(() => {
-    sdk.actions.openUrl("https://warpcast.com/~/compose");
-  }, []);
-
-  const close = useCallback(() => {
-    sdk.actions.close();
-  }, []);
-
-  const addFrame = useCallback(async () => {
-    try {
-      setNotificationDetails(null);
-
-      const result = await sdk.actions.addFrame();
-
-      if (result.notificationDetails) {
-        setNotificationDetails(result.notificationDetails);
-      }
-      setAddFrameResult(
-        result.notificationDetails
-          ? `Added, got notificaton token ${result.notificationDetails.token} and url ${result.notificationDetails.url}`
-          : "Added, got no notification details"
-      );
-    } catch (error) {
-      if (error instanceof AddFrame.RejectedByUser) {
-        setAddFrameResult(`Not added: ${error.message}`);
-      }
-      
-      if (error instanceof AddFrame.InvalidDomainManifest) {
-        setAddFrameResult(`Not added: ${error.message}`);
-      }
-
-      setAddFrameResult(`Error: ${error}`);
-    }
-  }, []);
-
-  const sendNotification = useCallback(async () => {
-    setSendNotificationResult("");
-    if (!notificationDetails || !context) {
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/send-notification", {
-        method: "POST",
-        mode: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fid: context.user.fid,
-          notificationDetails,
-        }),
-      });
-
-      if (response.status === 200) {
-        setSendNotificationResult("Success");
-        return;
-      } else if (response.status === 429) {
-        setSendNotificationResult("Rate limited");
-        return;
-      }
-
-      const data = await response.text();
-      setSendNotificationResult(`Error: ${data}`);
-    } catch (error) {
-      setSendNotificationResult(`Error: ${error}`);
-    }
-  }, [context, notificationDetails]);
-
-  const sendTx = useCallback(() => {
-    sendTransaction(
-      {
-        // call yoink() on Yoink contract
-        to: "0x4bBFD120d9f352A0BEd7a014bd67913a2007a878",
-        data: "0x9846cd9efc000023c0",
-      },
-      {
-        onSuccess: (hash) => {
-          setTxHash(hash);
-        },
-      }
-    );
-  }, [sendTransaction]);
-
-  const signTyped = useCallback(() => {
-    signTypedData({
-      domain: {
-        name: "Frames v2 Demo",
-        version: "1",
-        chainId,
-      },
-      types: {
-        Message: [{ name: "content", type: "string" }],
-      },
-      message: {
-        content: "Hello from Frames v2!",
-      },
-      primaryType: "Message",
-    });
-  }, [chainId, signTypedData]);
-
-  const toggleContext = useCallback(() => {
-    setIsContextOpen((prev) => !prev);
-  }, []);
 
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
@@ -294,8 +73,8 @@ store.subscribe(providerDetails => {
           <div className="px-4 pb-8 flex flex-col justify-center">
             {/* GIF Image */}
             <div className="mb-6">
-              <img
-                src="/DON FULL BODY v2.gif"
+              <Image
+                src="/FULL-BODY-DON-V2.gif"
                 alt="DON Full Body"
                 width={125}
                 height={125}
@@ -369,7 +148,7 @@ store.subscribe(providerDetails => {
             {/* First Row */}
             <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
               <Image
-                src="/DON YELLOW NOUNS.gif"
+                src="/DON-YELLOW-NOUNS.gif"
                 alt="DON Yellow Nouns"
                 width={120}
                 height={120}
@@ -380,7 +159,7 @@ store.subscribe(providerDetails => {
 
             <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
               <Image
-                src="/DON SPACE SUIT MOON.png"
+                src="/DON-SPACE-SUIT-MOON.png"
                 alt="DON Space Suit"
                 width={120}
                 height={120}
@@ -391,7 +170,7 @@ store.subscribe(providerDetails => {
 
             <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
               <Image
-                src="/COMING SOON (4).gif"
+                src="/COMING-SOON-4.gif"
                 alt="Coming Soon"
                 width={120}
                 height={120}
@@ -425,7 +204,7 @@ store.subscribe(providerDetails => {
 
             <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
               <Image
-                src="/DON WITH BALLON.png"
+                src="/DON-WITH-BALLON.png"
                 alt="DON With Balloon"
                 width={120}
                 height={120}
@@ -579,18 +358,3 @@ store.subscribe(providerDetails => {
     </div>
   );
 }
-
-const renderError = (error: Error | null) => {
-  if (!error) return null;
-  if (error instanceof BaseError) {
-    const isUserRejection = error.walk(
-      (e) => e instanceof UserRejectedRequestError
-    );
-
-    if (isUserRejection) {
-      return <div className="text-red-500 text-xs mt-1">Rejected by user.</div>;
-    }
-  }
-
-  return <div className="text-red-500 text-xs mt-1">{error.message}</div>;
-};
