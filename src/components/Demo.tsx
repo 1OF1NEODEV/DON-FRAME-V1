@@ -73,86 +73,89 @@ export default function Demo() {
 
       {/* Content Container */}
       <div className="relative z-10 pt-16 flex-grow pb-8">
-        {/* First Middle Container - Origin */}
-        <div className="w-full max-w-xs mx-4 overflow-hidden shadow-2xl container mx-auto bg-white rounded-3xl mb-12 border-2 border-black">
-          {/* Black Header Bar */}
-          <div className="w-full bg-black py-6 px-4 mb-4 text-center">
-            <h2 className="text-lg font-bold text-white">Origin</h2>
+        {/* White Background Container */}
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-8 mb-12">
+          {/* First Middle Container - Origin */}
+          <div className="w-full max-w-xs mx-auto overflow-hidden shadow-2xl bg-white rounded-3xl mb-12 border-2 border-black">
+            {/* Black Header Bar */}
+            <div className="w-full bg-black py-6 px-4 mb-4 text-center">
+              <h2 className="text-lg font-bold text-white">Origin</h2>
+            </div>
+            {/* Container Content */}
+            <div className="px-4 pb-8 flex flex-col justify-center">
+              {/* GIF Image */}
+              <div className="mb-6">
+                <Image
+                  src="/FULL-BODY-DON-V2.gif"
+                  alt="DON Full Body"
+                  width={125}
+                  height={125}
+                  className="mx-auto"
+                />
+              </div>
+            </div>
           </div>
-          {/* Container Content */}
-          <div className="px-4 pb-8 flex flex-col justify-center">
-            {/* GIF Image */}
-            <div className="mb-6">
-              <Image
-                src="/FULL-BODY-DON-V2.gif"
-                alt="DON Full Body"
-                width={125}
-                height={125}
-                className="mx-auto"
-              />
+
+          {/* Second Middle Container - Tokenomics */}
+          <div className="w-full max-w-xs mx-auto overflow-hidden shadow-2xl bg-white rounded-3xl mb-12 border-2 border-black">
+            {/* Black Header Bar */}
+            <div className="w-full bg-black py-6 px-4 mb-4 text-center">
+              <h2 className={`text-lg font-bold ${pixelFont.className} text-white`}>Tokenomics</h2>
+            </div>
+            {/* Container Content */}
+            <div className="px-4 pb-8 flex flex-col justify-center">
+              {/* GIF Image */}
+              <div className="mt-6 mb-6">
+                <Image
+                  src="/7736b1d30d303e4.gif"
+                  alt="Tokenomics GIF"
+                  width={115}
+                  height={115}
+                  className="mx-auto"
+                  priority
+                />
+              </div>
+              {/* Tokenomics Text */}
+              <div className="text-xs text-black font-bebas-neue text-center px-4 mb-6">
+                <p>The circulating supply is 100,000,000,000 $DON.</p>
+                <p>
+                  $DON was fairly launched by clanker, an autonomous bot on farcaster that enables users to launch memecoins with a simple cast mentioning the bot. It starts with only the token supply (no eth), as clanker uses one-sided liquidity on uniswap v3.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Third Middle Container - Duplicated Tokenomics */}
+          <div className="w-full max-w-xs mx-auto overflow-hidden shadow-2xl bg-white rounded-3xl mb-12 border-2 border-black">
+            {/* Black Header Bar */}
+            <div className="w-full bg-black py-6 px-4 mb-4 text-center">
+              <h2 className={`text-lg font-bold ${pixelFont.className} text-white`}>How to Buy</h2>
+            </div>
+            {/* Container Content */}
+            <div className="px-4 pb-8 flex flex-col justify-center">
+              {/* GIF Image */}
+              <div className="mt-6 mb-6">
+                <Image
+                  src="/7736b1d30d303e4.gif"
+                  alt="Tokenomics GIF"
+                  width={115}
+                  height={115}
+                  className="mx-auto"
+                  priority
+                />
+              </div>
+              {/* Tokenomics Text */}
+              <div className="text-xs text-black font-bebas-neue text-center px-4 mb-6">
+                <p>The circulating supply is 100,000,000,000 $DON.</p>
+                <p>
+                  $DON was fairly launched by clanker, an autonomous bot on farcaster that enables users to launch memecoins with a simple cast mentioning the bot. It starts with only the token supply (no eth), as clanker uses one-sided liquidity on uniswap v3.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Second Middle Container - Tokenomics */}
-        <div className="w-full max-w-xs mx-4 overflow-hidden shadow-2xl container mx-auto bg-white rounded-3xl mb-12 border-2 border-black">
-          {/* Black Header Bar */}
-          <div className="w-full bg-black py-6 px-4 mb-4 text-center">
-            <h2 className={`text-lg font-bold ${pixelFont.className} text-white`}>Tokenomics</h2>
-          </div>
-          {/* Container Content */}
-          <div className="px-4 pb-8 flex flex-col justify-center">
-            {/* GIF Image */}
-            <div className="mt-6 mb-6">
-              <Image
-                src="/7736b1d30d303e4.gif"
-                alt="Tokenomics GIF"
-                width={115}
-                height={115}
-                className="mx-auto"
-                priority
-              />
-            </div>
-            {/* Tokenomics Text */}
-            <div className="text-xs text-black font-bebas-neue text-center px-4 mb-6">
-              <p>The circulating supply is 100,000,000,000 $DON.</p>
-              <p>
-                $DON was fairly launched by clanker, an autonomous bot on farcaster that enables users to launch memecoins with a simple cast mentioning the bot. It starts with only the token supply (no eth), as clanker uses one-sided liquidity on uniswap v3.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Third Middle Container - Duplicated Tokenomics */}
-        <div className="w-full max-w-xs mx-4 overflow-hidden shadow-2xl container mx-auto bg-white rounded-3xl mb-12 border-2 border-black">
-          {/* Black Header Bar */}
-          <div className="w-full bg-black py-6 px-4 mb-4 text-center">
-            <h2 className={`text-lg font-bold ${pixelFont.className} text-white`}>How to Buy</h2>
-          </div>
-          {/* Container Content */}
-          <div className="px-4 pb-8 flex flex-col justify-center">
-            {/* GIF Image */}
-            <div className="mt-6 mb-6">
-              <Image
-                src="/7736b1d30d303e4.gif"
-                alt="Tokenomics GIF"
-                width={115}
-                height={115}
-                className="mx-auto"
-                priority
-              />
-            </div>
-            {/* Tokenomics Text */}
-            <div className="text-xs text-black font-bebas-neue text-center px-4 mb-6">
-              <p>The circulating supply is 100,000,000,000 $DON.</p>
-              <p>
-                $DON was fairly launched by clanker, an autonomous bot on farcaster that enables users to launch memecoins with a simple cast mentioning the bot. It starts with only the token supply (no eth), as clanker uses one-sided liquidity on uniswap v3.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Gallery Section */}
+        {/* Gallery Section - Outside the white container */}
         <div className="w-full max-w-md mx-auto px-4 mb-8 mt-8">
           <div className="grid grid-cols-3 gap-2">
             {/* First Row */}
@@ -225,7 +228,7 @@ export default function Demo() {
           </div>
         </div>
 
-        {/* Social Icons */}
+        {/* Social Icons - Outside the white container */}
         <div className="flex justify-center items-center space-x-4 mb-8">
           {/* Twitter/X Icon */}
           <a 
