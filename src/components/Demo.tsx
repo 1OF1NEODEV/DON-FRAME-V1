@@ -60,21 +60,22 @@ export default function Demo() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Background Container with inline styles for better control */}
+      {/* Background Container */}
       <div 
-        className="fixed inset-0 w-full h-full z-0"
+        className="fixed inset-0 w-full h-full z-0 bg-black/20"
         style={{
           backgroundImage: 'var(--bg-image)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
+          opacity: '0.8'
         }}
       />
 
       {/* Content Container */}
       <div className="relative z-10 pt-16 flex-grow pb-8">
-        {/* White Background Container */}
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-8 mb-12">
+        {/* White Background Container - Alternative style */}
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-[0_0_15px_rgba(0,0,0,0.2)] p-8 mb-12 border-4 border-white/50">
           {/* First Middle Container - Origin */}
           <div className="w-full max-w-xs mx-auto overflow-hidden shadow-2xl bg-white rounded-3xl mb-12 border-2 border-black">
             {/* Black Header Bar */}
