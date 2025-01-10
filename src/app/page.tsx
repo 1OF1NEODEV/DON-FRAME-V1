@@ -1,5 +1,13 @@
+
+
+import dynamic from 'next/dynamic';
+
 import { Metadata } from "next";
 import App from "./app";
+
+const Demo = dynamic(() => import('~/components/Demo'), {
+  ssr: false,
+});
 
 const appUrl = process.env.NEXT_PUBLIC_URL;
 

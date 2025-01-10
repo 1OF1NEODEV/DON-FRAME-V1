@@ -4,10 +4,20 @@ import { useEffect, useCallback, useState } from "react";
 import sdk, {
   AddFrame,
   FrameNotificationDetails,
-  type Context,
 } from "@farcaster/frame-sdk";
 import Image from 'next/image'
 import { Press_Start_2P } from 'next/font/google'
+
+// Update the context type to match SDK's type
+type FrameContext = {
+  client: {
+    notificationDetails?: FrameNotificationDetails | undefined;
+    added?: boolean;
+  };
+  user?: {
+    fid: number;
+  };
+};
 
 // Initialize the pixel font
 const pixelFont = Press_Start_2P({
@@ -17,7 +27,7 @@ const pixelFont = Press_Start_2P({
 
 export default function Demo() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
-  const [context, setContext] = useState<Context.FrameContext>();
+  const [context, setContext] = useState<FrameContext>();
   const [notificationDetails, setNotificationDetails] =
     useState<FrameNotificationDetails | null>(null);
 
@@ -28,8 +38,8 @@ export default function Demo() {
   useEffect(() => {
     const load = async () => {
       const context = await sdk.context;
-      setContext(context);
-
+      setContext(context as FrameContext);
+      
       console.log("Calling ready");
       sdk.actions.ready({});
     };
