@@ -29,7 +29,14 @@ import { BaseError, UserRejectedRequestError } from "viem";
 import { useSession } from "next-auth/react"
 import { createStore } from 'mipd'
 import { Label } from "~/components/ui/label";
+import Image from 'next/image'
+import { Press_Start_2P } from 'next/font/google'
 
+// Initialize the pixel font
+const pixelFont = Press_Start_2P({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export default function Demo(
   { title }: { title?: string } = { title: "Frames v2 Demo" }
@@ -263,435 +270,313 @@ store.subscribe(providerDetails => {
   }
 
   return (
-    <div style={{ 
-      paddingTop: context?.client.safeAreaInsets?.top ?? 0, 
-      paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
-      paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
-      paddingRight: context?.client.safeAreaInsets?.right ?? 0 ,
-    }}>
-      <div className="w-[300px] mx-auto py-2 px-2">
-        <h1 className="text-2xl font-bold text-center mb-4">{title}</h1>
+    <div className="relative min-h-screen">
+      {/* Background Container with inline styles for better control */}
+      <div 
+        className="fixed inset-0 w-full h-full z-0"
+        style={{
+          backgroundImage: 'var(--bg-image)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
 
-        <div className="mb-4">
-          <h2 className="font-2xl font-bold">Context</h2>
-          <button
-            onClick={toggleContext}
-            className="flex items-center gap-2 transition-colors"
+      {/* Content Container */}
+      <div className="relative z-10 pt-16 flex-grow pb-8">
+        {/* First Middle Container - Origin */}
+        <div className="w-full max-w-xs mx-4 overflow-hidden shadow-2xl container mx-auto bg-white rounded-3xl mb-12 border-2 border-black">
+          {/* Black Header Bar */}
+          <div className="w-full bg-black py-6 px-4 mb-4 text-center">
+            <h2 className="text-lg font-bold text-white">Origin</h2>
+          </div>
+          {/* Container Content */}
+          <div className="px-4 pb-8 flex flex-col justify-center">
+            {/* GIF Image */}
+            <div className="mb-6">
+              <img
+                src="/DON FULL BODY v2.gif"
+                alt="DON Full Body"
+                width={125}
+                height={125}
+                className="mx-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Second Middle Container - Tokenomics */}
+        <div className="w-full max-w-xs mx-4 overflow-hidden shadow-2xl container mx-auto bg-white rounded-3xl mb-12 border-2 border-black">
+          {/* Black Header Bar */}
+          <div className="w-full bg-black py-6 px-4 mb-4 text-center">
+            <h2 className={`text-lg font-bold ${pixelFont.className} text-white`}>Tokenomics</h2>
+          </div>
+          {/* Container Content */}
+          <div className="px-4 pb-8 flex flex-col justify-center">
+            {/* GIF Image */}
+            <div className="mt-6 mb-6">
+              <Image
+                src="/7736b1d30d303e4.gif"
+                alt="Tokenomics GIF"
+                width={115}
+                height={115}
+                className="mx-auto"
+                priority
+              />
+            </div>
+            {/* Tokenomics Text */}
+            <div className="text-xs text-black font-bebas-neue text-center px-4 mb-6">
+              <p>The circulating supply is 100,000,000,000 $DON.</p>
+              <p>
+                $DON was fairly launched by clanker, an autonomous bot on farcaster that enables users to launch memecoins with a simple cast mentioning the bot. It starts with only the token supply (no eth), as clanker uses one-sided liquidity on uniswap v3.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Third Middle Container - Duplicated Tokenomics */}
+        <div className="w-full max-w-xs mx-4 overflow-hidden shadow-2xl container mx-auto bg-white rounded-3xl mb-12 border-2 border-black">
+          {/* Black Header Bar */}
+          <div className="w-full bg-black py-6 px-4 mb-4 text-center">
+            <h2 className={`text-lg font-bold ${pixelFont.className} text-white`}>How to Buy</h2>
+          </div>
+          {/* Container Content */}
+          <div className="px-4 pb-8 flex flex-col justify-center">
+            {/* GIF Image */}
+            <div className="mt-6 mb-6">
+              <Image
+                src="/7736b1d30d303e4.gif"
+                alt="Tokenomics GIF"
+                width={115}
+                height={115}
+                className="mx-auto"
+                priority
+              />
+            </div>
+            {/* Tokenomics Text */}
+            <div className="text-xs text-black font-bebas-neue text-center px-4 mb-6">
+              <p>The circulating supply is 100,000,000,000 $DON.</p>
+              <p>
+                $DON was fairly launched by clanker, an autonomous bot on farcaster that enables users to launch memecoins with a simple cast mentioning the bot. It starts with only the token supply (no eth), as clanker uses one-sided liquidity on uniswap v3.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Gallery Section */}
+        <div className="w-full max-w-md mx-auto px-4 mb-8 mt-8">
+          <div className="grid grid-cols-3 gap-2">
+            {/* First Row */}
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
+              <Image
+                src="/DON YELLOW NOUNS.gif"
+                alt="DON Yellow Nouns"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain bg-white"
+                priority
+              />
+            </div>
+
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
+              <Image
+                src="/DON SPACE SUIT MOON.png"
+                alt="DON Space Suit"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain bg-white"
+                priority
+              />
+            </div>
+
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
+              <Image
+                src="/COMING SOON (4).gif"
+                alt="Coming Soon"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain bg-white"
+                priority
+              />
+            </div>
+
+            {/* Second Row */}
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
+              <Image
+                src="/COMING SOON (3).gif"
+                alt="Coming Soon"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain bg-white"
+                priority
+              />
+            </div>
+
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
+              <Image
+                src="/WHITE DOG HOUSE.gif"
+                alt="White Dog House"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain bg-white"
+                priority
+              />
+            </div>
+
+            <div className="aspect-square rounded-lg overflow-hidden shadow-lg border-2 border-black">
+              <Image
+                src="/DON WITH BALLON.png"
+                alt="DON With Balloon"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain bg-white"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Social Icons */}
+        <div className="flex justify-center items-center space-x-4 mb-8">
+          {/* Twitter/X Icon */}
+          <a 
+            href="https://x.com/dononbase" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:opacity-75"
           >
-            <span
-              className={`transform transition-transform ${
-                isContextOpen ? "rotate-90" : ""
-              }`}
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24"
+              height="24"
+              viewBox="0,0,256,256"
+              className="fill-white hover:fill-gray-300 transition-colors"
             >
-              ➤
-            </span>
-            Tap to expand
-          </button>
+              <g fill="#ffffff" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{mixBlendMode: "normal"}}>
+                <g transform="scale(8,8)">
+                  <rect x="3" y="2" width="8" height="2"></rect>
+                  <rect x="21" y="28" width="8" height="2"></rect>
+                  <rect x="5" y="4" width="2" height="3"></rect>
+                  <rect x="7" y="7" width="2" height="3"></rect>
+                  <rect x="11" y="4" width="2" height="3"></rect>
+                  <rect x="9" y="10" width="2" height="3"></rect>
+                  <rect x="13" y="7" width="2" height="3"></rect>
+                  <rect x="11" y="13" width="2" height="3"></rect>
+                  <rect x="15" y="10" width="2" height="3"></rect>
+                  <rect x="13" y="16" width="2" height="3"></rect>
+                  <rect x="17" y="13" width="2" height="3"></rect>
+                  <rect x="19" y="10" width="2" height="3"></rect>
+                  <rect x="11" y="19" width="2" height="3"></rect>
+                  <rect x="9" y="22" width="2" height="3"></rect>
+                  <rect x="7" y="25" width="2" height="3"></rect>
+                  <rect x="5" y="28" width="2" height="2"></rect>
+                  <rect x="21" y="7" width="2" height="3"></rect>
+                  <rect x="23" y="4" width="2" height="3"></rect>
+                  <rect x="25" y="2" width="2" height="2"></rect>
+                  <rect x="15" y="19" width="2" height="3"></rect>
+                  <rect x="19" y="16" width="2" height="3"></rect>
+                  <rect x="17" y="22" width="2" height="3"></rect>
+                  <rect x="21" y="19" width="2" height="3"></rect>
+                  <rect x="19" y="25" width="2" height="3"></rect>
+                  <rect x="23" y="22" width="2" height="3"></rect>
+                  <rect x="25" y="25" width="2" height="3"></rect>
+                </g>
+              </g>
+            </svg>
+          </a>
 
-          {isContextOpen && (
-            <div className="p-4 mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                {JSON.stringify(context, null, 2)}
-              </pre>
-            </div>
-          )}
-        </div>
-
-        <div>
-          <h2 className="font-2xl font-bold">Actions</h2>
-
-          <div className="mb-4">
-            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                sdk.actions.signIn
-              </pre>
-            </div>
-            <SignIn />
-          </div>
-
-          <div className="mb-4">
-            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                sdk.actions.openUrl
-              </pre>
-            </div>
-            <Button onClick={openUrl}>Open Link</Button>
-          </div>
-
-          <div className="mb-4">
-            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                sdk.actions.openUrl
-              </pre>
-            </div>
-            <Button onClick={openWarpcastUrl}>Open Warpcast Link</Button>
-          </div>
-
-          <div className="mb-4">
-            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                sdk.actions.viewProfile
-              </pre>
-            </div>
-            <ViewProfile />
-          </div>
-
-          <div className="mb-4">
-            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                sdk.actions.close
-              </pre>
-            </div>
-            <Button onClick={close}>Close Frame</Button>
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <h2 className="font-2xl font-bold">Last event</h2>
-
-          <div className="p-4 mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-              {lastEvent || "none"}
-            </pre>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="font-2xl font-bold">Add to client & notifications</h2>
-
-          <div className="mt-2 mb-4 text-sm">
-            Client fid {context?.client.clientFid},
-            {added ? " frame added to client," : " frame not added to client,"}
-            {notificationDetails
-              ? " notifications enabled"
-              : " notifications disabled"}
-          </div>
-
-          <div className="mb-4">
-            <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg my-2">
-              <pre className="font-mono text-xs whitespace-pre-wrap break-words max-w-[260px] overflow-x-">
-                sdk.actions.addFrame
-              </pre>
-            </div>
-            {addFrameResult && (
-              <div className="mb-2 text-sm">
-                Add frame result: {addFrameResult}
-              </div>
-            )}
-            <Button onClick={addFrame} disabled={added}>
-              Add frame to client
-            </Button>
-          </div>
-
-          {sendNotificationResult && (
-            <div className="mb-2 text-sm">
-              Send notification result: {sendNotificationResult}
-            </div>
-          )}
-          <div className="mb-4">
-            <Button onClick={sendNotification} disabled={!notificationDetails}>
-              Send notification
-            </Button>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="font-2xl font-bold">Wallet</h2>
-
-          {address && (
-            <div className="my-2 text-xs">
-              Address: <pre className="inline">{truncateAddress(address)}</pre>
-            </div>
-          )}
-
-          {chainId && (
-            <div className="my-2 text-xs">
-              Chain ID: <pre className="inline">{chainId}</pre>
-            </div>
-          )}
-
-          <div className="mb-4">
-            <Button
-              onClick={() =>
-                isConnected
-                  ? disconnect()
-                  : connect({ connector: config.connectors[0] })
-              }
+          {/* Telegram Icon */}
+          <a 
+            href="https://t.me/dononbase" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:opacity-75"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24"
+              height="24"
+              viewBox="0 0 32 32"
             >
-              {isConnected ? "Disconnect" : "Connect"}
-            </Button>
-          </div>
+              <polygon fill="#589bd4" points="28,10 28,22 26,22 26,24 24,24 24,26 22,26 22,28 10,28 10,26 8,26 8,24 6,24 6,22 4,22 4,10 6,10 6,8 8,8 8,6 10,6 10,4 22,4 22,6 24,6 24,8 26,8 26,10"></polygon>
+              <polygon fill="#e6e5e5" points="21,9 21,23 19,23 19,21 15,21 15,19 13,19 13,21 11,21 11,17 8,17 8,15 11,15 11,13 13,13 13,11 17,11 17,9"></polygon>
+              <polygon fill="#b6b5b5" points="13,15 13,17 11,17 11,21 13,21 13,19 15,19 15,15"></polygon>
+              <rect width="2" height="2" x="15" y="13" fill="#b6b5b5"></rect>
+            </svg>
+          </a>
 
-          <div className="mb-4">
-            <SignMessage />
-          </div>
+          {/* Instagram Icon */}
+          <a 
+            href="https://www.instagram.com/dononbase/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:opacity-75"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24"
+              height="24"
+              viewBox="0 0 32 32"
+            >
+              <path fill="#f18f06" fillRule="evenodd" d="M8.997,28.997h-2v-2h-2v-2l-1-1v-9h24v9l-1,1v2h-2v2h-2h-4l-1-1h-8L8.997,28.997z" clipRule="evenodd"></path>
+              <path fill="#f18f06" fillRule="evenodd" d="M3.997,19.997v-7h22v9l1,1v4h-2v2h-2v-2l-1-1l2-2l-1-1h-2v-2h-2l-1-1h-4l-2-2l-1,1h-2v2h-2l-2,2v2h-2v-4L3.997,19.997z" clipRule="evenodd"></path>
+              <path fill="#e41e2f" fillRule="evenodd" d="M2.997,14.997v6h2l2-4h2v-2h10l2,4h2v2h2l2,2v2h2v-6l-1-1v-9h-24v5L2.997,14.997z" clipRule="evenodd"></path>
+              <path fill="#e41e2f" fillRule="evenodd" d="M2.997,12.997v2h2l2-2h2v-2h4l6,2l1,1l1-1h2v2h3l1,4h2v-2l-3-9h-22L2.997,12.997z" clipRule="evenodd"></path>
+              <path fill="#085295" fillRule="evenodd" d="M2.997,12.997v-6h2v-2h2v-2h18v2h2v2h2v10h-2l-2-4h-2v-2l-1-1l-1,1h-2v-2h-10v2h-2l-2,2H2.997z" clipRule="evenodd"></path>
+              <path fill="#f18f06" fillRule="evenodd" d="M8.997,28.997v-2l2-2v-2h6v2l2,2v2H8.997z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M8.996,4.999v1.999h14.001V4.999H8.996z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M8.997,24.999v1.999h14.001v-1.999H8.997z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M26.997,8.997h-1.999v14.001h1.999V8.997z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M6.997,8.999H4.999V23h1.999V8.999z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M8.997,6.996H6.999v2.001h1.999V6.996z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M24.997,6.997h-1.999v2.001h1.999V6.997z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M24.997,22.996h-1.999v2.001h1.999V22.996z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M8.996,22.996H6.997v2.001h1.999V22.996z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M22.997,8.997h-1.999v2.001h1.999V8.997z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M19,10.996h-6.001v2.001H19V10.996z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M18.999,18.996h-6.001v2.001h6.001V18.996z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M21,18.999v-6.001h-2.001v6.001H21z" clipRule="evenodd"></path>
+              <path fill="#e6e5e5" fillRule="evenodd" d="M13,18.997v-6.001h-2.001v6.001H13z" clipRule="evenodd"></path>
+            </svg>
+          </a>
 
-          {isConnected && (
-            <>
-              <div className="mb-4">
-                <SendEth />
-              </div>
-              <div className="mb-4">
-                <Button
-                  onClick={sendTx}
-                  disabled={!isConnected || isSendTxPending}
-                  isLoading={isSendTxPending}
-                >
-                  Send Transaction (contract)
-                </Button>
-                {isSendTxError && renderError(sendTxError)}
-                {txHash && (
-                  <div className="mt-2 text-xs">
-                    <div>Hash: {truncateAddress(txHash)}</div>
-                    <div>
-                      Status:{" "}
-                      {isConfirming
-                        ? "Confirming..."
-                        : isConfirmed
-                        ? "Confirmed!"
-                        : "Pending"}
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="mb-4">
-                <Button
-                  onClick={signTyped}
-                  disabled={!isConnected || isSignTypedPending}
-                  isLoading={isSignTypedPending}
-                >
-                  Sign Typed Data
-                </Button>
-                {isSignTypedError && renderError(signTypedError)}
-              </div>
-              <div className="mb-4">
-                <Button
-                  onClick={handleSwitchChain}
-                  disabled={isSwitchChainPending}
-                  isLoading={isSwitchChainPending}
-                >
-                  Switch to {chainId === base.id ? "Optimism" : "Base"}
-                </Button>
-                {isSwitchChainError && renderError(switchChainError)}
-              </div>
-            </>
-          )}
+          {/* TikTok Icon */}
+          <a 
+            href="https://www.tiktok.com/@dononbase?is_from_webapp=1&sender_device=pc" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:opacity-75"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24"
+              height="24"
+              viewBox="0,0,256,256"
+              className="fill-white hover:fill-gray-300 transition-colors"
+            >
+              <g fill="none" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" style={{mixBlendMode: "normal"}}>
+                <g transform="scale(8,8)">
+                  <path d="M25,6v-2h-18v2h-3v20h3v2h18v-2h3v-20z" fill="#000000"></path>
+                  <rect x="10" y="17" width="2" height="2" fill="#589bd4"></rect>
+                  <rect x="12" y="15" width="2" height="2" fill="#589bd4"></rect>
+                  <rect x="14" y="21" width="2" height="2" fill="#589bd4"></rect>
+                  <rect x="16" y="7" width="2" height="2" fill="#589bd4"></rect>
+                  <rect x="14" y="17" width="2" height="2" fill="#c21057"></rect>
+                  <rect x="16" y="23" width="2" height="2" fill="#c21057"></rect>
+                  <rect x="18" y="9" width="2" height="2" fill="#c21057"></rect>
+                  <rect x="20" y="11" width="2" height="2" fill="#c21057"></rect>
+                  <rect x="16" y="7" width="2" height="2" fill="#589bd4"></rect>
+                  <rect x="12" y="23" width="4" height="2" fill="#e6e5e5"></rect>
+                  <rect x="10" y="19" width="2" height="4" fill="#e6e5e5"></rect>
+                  <rect x="12" y="17" width="2" height="2" fill="#e6e5e5"></rect>
+                  <path d="M20,13v-2h-2v-2h-2v14h2v-8h4v-2z" fill="#e6e5e5"></path>
+                </g>
+              </g>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
-  );
-}
-
-function SignMessage() {
-  const { isConnected } = useAccount();
-  const { connectAsync } = useConnect();
-  const {
-    signMessage,
-    data: signature,
-    error: signError,
-    isError: isSignError,
-    isPending: isSignPending,
-  } = useSignMessage();
-
-  const handleSignMessage = useCallback(async () => {
-    if (!isConnected) {
-      await connectAsync({
-        chainId: base.id,
-        connector: config.connectors[0],
-      });
-    }
-
-    signMessage({ message: "Hello from Frames v2!" });
-  }, [connectAsync, isConnected, signMessage]);
-
-  return (
-    <>
-      <Button
-        onClick={handleSignMessage}
-        disabled={isSignPending}
-        isLoading={isSignPending}
-      >
-        Sign Message
-      </Button>
-      {isSignError && renderError(signError)}
-      {signature && (
-        <div className="mt-2 text-xs">
-          <div>Signature: {signature}</div>
-        </div>
-      )}
-    </>
-  );
-}
-
-function SendEth() {
-  const { isConnected, chainId } = useAccount();
-  const {
-    sendTransaction,
-    data,
-    error: sendTxError,
-    isError: isSendTxError,
-    isPending: isSendTxPending,
-  } = useSendTransaction();
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash: data,
-    });
-
-  const toAddr = useMemo(() => {
-    // Protocol guild address
-    return chainId === base.id
-      ? "0x32e3C7fD24e175701A35c224f2238d18439C7dBC"
-      : "0xB3d8d7887693a9852734b4D25e9C0Bb35Ba8a830";
-  }, [chainId]);
-
-  const handleSend = useCallback(() => {
-    sendTransaction({
-      to: toAddr,
-      value: 1n,
-    });
-  }, [toAddr, sendTransaction]);
-
-  return (
-    <>
-      <Button
-        onClick={handleSend}
-        disabled={!isConnected || isSendTxPending}
-        isLoading={isSendTxPending}
-      >
-        Send Transaction (eth)
-      </Button>
-      {isSendTxError && renderError(sendTxError)}
-      {data && (
-        <div className="mt-2 text-xs">
-          <div>Hash: {truncateAddress(data)}</div>
-          <div>
-            Status:{" "}
-            {isConfirming
-              ? "Confirming..."
-              : isConfirmed
-              ? "Confirmed!"
-              : "Pending"}
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
-function SignIn() {
-  const [signingIn, setSigningIn] = useState(false);
-  const [signingOut, setSigningOut] = useState(false);
-  const [signInResult, setSignInResult] = useState<SignInCore.SignInResult>();
-  const [signInFailure, setSignInFailure] = useState<string>();
-  const { data: session, status } = useSession()
-
-  const getNonce = useCallback(async () => {
-    const nonce = await getCsrfToken();
-    if (!nonce) throw new Error("Unable to generate nonce");
-    return nonce;
-  }, []);
-
-  const handleSignIn = useCallback(async () => {
-    try {
-      setSigningIn(true);
-      setSignInFailure(undefined);
-      const nonce = await getNonce();
-      const result = await sdk.actions.signIn({ nonce });
-      setSignInResult(result);
-
-      await signIn("credentials", {
-        message: result.message,
-        signature: result.signature,
-        redirect: false,
-      });
-    } catch (e) {
-      if (e instanceof SignInCore.RejectedByUser) {
-        setSignInFailure("Rejected by user");
-        return;
-      }
-
-      setSignInFailure("Unknown error");
-    } finally {
-      setSigningIn(false);
-    }
-  }, [getNonce]);
-
-  const handleSignOut = useCallback(async () => {
-    try {
-      setSigningOut(true);
-      await signOut({ redirect: false }) 
-      setSignInResult(undefined);
-    } finally {
-      setSigningOut(false);
-    }
-  }, []);
-
-  return (
-    <>
-      {status !== "authenticated" &&
-        <Button
-          onClick={handleSignIn}
-          disabled={signingIn}
-        >
-          Sign In with Farcaster
-        </Button>
-      }
-      {status === "authenticated" &&
-        <Button
-          onClick={handleSignOut}
-          disabled={signingOut}
-        >
-          Sign out
-        </Button>
-      }
-      {session &&
-        <div className="my-2 p-2 text-xs overflow-x-scroll bg-gray-100 rounded-lg font-mono">
-          <div className="font-semibold text-gray-500 mb-1">Session</div>
-          <div className="whitespace-pre">{JSON.stringify(session, null, 2)}</div>
-        </div>
-      }
-      {signInFailure && !signingIn && (
-        <div className="my-2 p-2 text-xs overflow-x-scroll bg-gray-100 rounded-lg font-mono">
-          <div className="font-semibold text-gray-500 mb-1">SIWF Result</div>
-          <div className="whitespace-pre">{signInFailure}</div>
-        </div>
-      )}
-      {signInResult && !signingIn && (
-        <div className="my-2 p-2 text-xs overflow-x-scroll bg-gray-100 rounded-lg font-mono">
-          <div className="font-semibold text-gray-500 mb-1">SIWF Result</div>
-          <div className="whitespace-pre">{JSON.stringify(signInResult, null, 2)}</div>
-        </div>
-      )}
-    </>
-  );
-}
-
-function ViewProfile() {
-  const [fid, setFid] = useState('3');
-
-  return (
-    <>
-      <div>
-        <Label className="text-xs font-semibold text-gray-500 mb-1" htmlFor="view-profile-fid">Fid</Label>
-        <Input
-          id="view-profile-fid"
-          type="number"
-          value={fid}
-          className="mb-2"
-          onChange={(e) => { 
-            setFid(e.target.value)
-          }}
-          step="1"
-          min="1"
-        />
-      </div>
-      <Button
-        onClick={() => { sdk.actions.viewProfile({ fid: parseInt(fid) }) }}
-      >
-        View Profile
-      </Button>
-    </>
   );
 }
 
